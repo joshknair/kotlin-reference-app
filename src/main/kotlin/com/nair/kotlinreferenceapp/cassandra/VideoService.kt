@@ -4,8 +4,11 @@ import org.springframework.data.cassandra.core.mapping.Column
 import org.springframework.data.cassandra.core.mapping.PrimaryKey
 import org.springframework.data.cassandra.core.mapping.Table
 import org.springframework.data.cassandra.repository.CassandraRepository
+import org.springframework.data.cassandra.repository.ReactiveCassandraRepository
 import org.springframework.stereotype.Component
 import org.springframework.stereotype.Repository
+import reactor.core.publisher.Flux
+import reactor.core.publisher.Mono
 import java.time.LocalDateTime
 import java.util.*
 
@@ -19,16 +22,16 @@ data class Video(
 )
 
 @Repository
-open interface VideoRepository : CassandraRepository<Video, UUID> {
+open interface VideoRepository : ReactiveCassandraRepository<Video, UUID> {
 }
 
 @Component
 class VideoService (var videoRepository: VideoRepository) {
-    fun findById(id: UUID): Optional<Video> {
+    fun findById(id: UUID): Mono<Video> {
         return videoRepository.findById(id)
     }
 
-    fun findAll(): List<Video> {
+    fun findAll(): Flux<Video> {
         return videoRepository.findAll()
     }
 }
