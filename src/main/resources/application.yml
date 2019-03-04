@@ -42,6 +42,12 @@ management:
     mappings:
       enabled: true
 
+cassandra:
+  contactpoints: localhost
+  port: 9042
+  keyspace: videodb
+  basePackages: com.nair.kotlinreferenceapp.cassandra
+
 kotlin-reference-app:
 
 # Default Profile
